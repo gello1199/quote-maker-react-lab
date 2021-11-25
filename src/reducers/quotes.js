@@ -27,23 +27,35 @@ export default (state = [], action) => {
           ...state.slice(index + 1)
         ]
 
-        case "DOWNVOTE_QUOTE":
-          index = state.findIndex(q => q.id === action.quoteId)
+        // case "DOWNVOTE_QUOTE":
+        //   index = state.findIndex(q => q.id === action.quoteId)
 
-          newQuote = {
-            ...state[index],
-            votes: state[index].votes - 1
-          }
+        //   newQuote = {
+        //     ...state[index],
+        //     votes: state[index].votes - 1
+        //   }
 
-          if(newQuote.votes > 0) {
-            // debugger
+        //   if(newQuote.votes > 0) {
+        //     // debugger
+        //     return [
+        //       ...state.slice(0, index),
+        //       newQuote,
+        //     ...state.slice(index + 1)
+        //   ]
+        // }
+        // return state
+
+        case 'DOWNVOTE_QUOTE':
+          index = state.findIndex(quote => quote.id === action.quoteId);
+          newQuote = state[index];
+          if (newQuote.votes > 0) {
             return [
               ...state.slice(0, index),
-              newQuote,
-            ...state.slice(index + 1)
-          ]
-        }
-        return state
+              Object.assign({}, newQuote, { votes: newQuote.votes -= 1 }),
+              ...state.slice(index + 1)
+            ];
+          }
+          return state;
 
         default:
           return state
