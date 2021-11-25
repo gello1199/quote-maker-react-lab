@@ -33,12 +33,14 @@ export default (state = [], action) => {
           }
 
           if(downQuote.votes > 0) {
+            debugger
             return [
               ...state.slice(0, downIndex),
             downQuote,
             ...state.slice(downIndex + 1)
           ]
         }
+        debugger
         return state
 
         default:
