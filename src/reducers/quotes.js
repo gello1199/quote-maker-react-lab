@@ -1,5 +1,8 @@
 export default (state = [], action) => {
 
+  let index;
+  let newQuote;
+
   switch(action.type) {
 
     case "ADD_QUOTE":
@@ -11,9 +14,9 @@ export default (state = [], action) => {
         return newQuotes
 
         case "UPVOTE_QUOTE":
-          const index = state.findIndex(q => q.id === action.quoteId)
+          index = state.findIndex(q => q.id === action.quoteId)
 
-          const newQuote = {
+          newQuote = {
             ...state[index], 
             votes: state[index].votes + 1
           }
@@ -25,22 +28,21 @@ export default (state = [], action) => {
         ]
 
         case "DOWNVOTE_QUOTE":
-          const downIndex = state.findIndex(q => q.id === action.quoteId)
+          index = state.findIndex(q => q.id === action.quoteId)
 
-          const downQuote = {
-            ...state[downIndex],
-            votes: state[downIndex].votes - 1
+          newQuote = {
+            ...state[index],
+            votes: state[index].votes - 1
           }
 
-          if(downQuote.votes > 0) {
-            debugger
+          if(newQuote.votes > 0) {
+            // debugger
             return [
-              ...state.slice(0, downIndex),
-            downQuote,
-            ...state.slice(downIndex + 1)
+              ...state.slice(0, index),
+              newQuote,
+            ...state.slice(index + 1)
           ]
         }
-        debugger
         return state
 
         default:
